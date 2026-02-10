@@ -18,7 +18,12 @@
       "Bash(yes:*)",
       "Bash(npm install:*)",
       "Bash(python:*)",
-      "Bash(node -e:*)"
+      "Bash(node -e:*)",
+      "Bash(dir:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm search:*)",
+      "Bash(node:*)",
+      "Bash(del:*)"
     ]
   }
 }

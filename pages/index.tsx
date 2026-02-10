@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import Script from "next/script";
 
 export default function Home() {
@@ -48,22 +49,10 @@ export default function Home() {
 
       {/* Main content */}
       <div className="relative z-10 flex h-screen flex-col items-center justify-center p-6 text-center">
-        {/* Badge */}
-        <div
-          className="mb-10 inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-1.5 text-[0.8rem] text-[var(--color-text-muted)]"
-          style={{ fontFamily: "'JetBrains Mono', monospace", animation: "fadeInUp 0.8s ease-out" }}
-        >
-          <span
-            className="h-2 w-2 rounded-full bg-green-500"
-            style={{ animation: "pulse-dot 2s ease-in-out infinite" }}
-          />
-          Wkr&oacute;tce startujemy
-        </div>
-
         {/* Heading */}
         <h1
           className="text-[clamp(4rem,14vw,12rem)] font-bold leading-none tracking-tight"
-          style={{ fontFamily: "'Pixelify Sans', sans-serif", animation: "fadeInUp 0.8s ease-out 0.1s both" }}
+          style={{ fontFamily: "'Pixelify Sans', sans-serif", animation: "fadeInUp 0.8s ease-out" }}
         >
           <span className="bg-gradient-to-br from-[var(--color-accent)] via-[var(--color-accent2)] to-[var(--color-pink)] bg-clip-text text-transparent">
             spierdal
@@ -75,6 +64,33 @@ export default function Home() {
             .ai
           </span>
         </h1>
+
+        {/* Links */}
+        <div
+          className="mt-10 flex items-center gap-4"
+          style={{ fontFamily: "'JetBrains Mono', monospace", animation: "fadeInUp 0.8s ease-out 0.2s both" }}
+        >
+          <Link
+            href="/s"
+            className="group relative inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[0.8rem] text-[var(--color-text)] transition-all"
+            style={{
+              background: "linear-gradient(var(--color-surface), var(--color-surface)) padding-box, linear-gradient(135deg, var(--color-accent), var(--color-accent2), var(--color-pink)) border-box",
+              border: "1px solid transparent",
+              boxShadow: "0 0 20px rgba(168, 85, 247, 0.15), 0 0 40px rgba(99, 102, 241, 0.1)",
+            }}
+          >
+            Skr&oacute;ć swoją wiadomość
+          </Link>
+          <div
+            className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-1.5 text-[0.8rem] text-[var(--color-text-muted)]"
+          >
+            <span
+              className="h-2 w-2 rounded-full bg-green-500"
+              style={{ animation: "pulse-dot 2s ease-in-out infinite" }}
+            />
+            Więcej wkr&oacute;tce
+          </div>
+        </div>
       </div>
 
       <Script defer src="/_vercel/insights/script.js" />
