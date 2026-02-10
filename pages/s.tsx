@@ -178,7 +178,7 @@ export default function Shortener() {
           autoFocus
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Wpisz tekst i skopiuj link"
+          placeholder="Wpisz tekst i skopiuj link..."
           className="w-full max-w-[1024px] min-h-[80vh] resize-none bg-transparent py-[10vh] px-6 text-center text-[var(--color-text)] placeholder-[var(--color-text-muted)]/40 outline-none leading-relaxed"
           style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "clamp(1.25rem, 3vh, 3rem)" }}
         />
