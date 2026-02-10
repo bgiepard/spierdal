@@ -79,7 +79,7 @@ export default function Home() {
               boxShadow: "0 0 20px rgba(168, 85, 247, 0.15), 0 0 40px rgba(99, 102, 241, 0.1)",
             }}
           >
-            Skr&oacute;ć swoją wiadomość
+            Pisz &mdash; link się tworzy
           </Link>
           <div
             className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-1.5 text-[0.8rem] text-[var(--color-text-muted)]"

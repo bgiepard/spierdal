@@ -96,14 +96,14 @@ function b81decode(str: string): Uint8Array {
 function compress(text: string): string {
   const processed = preprocess(text);
   const bytes = new TextEncoder().encode(processed);
-  const compressed = pako.deflateRaw(bytes, { level: 9, dictionary: DICT });
+  const compressed = pako.deflateRaw(bytes, { level: 9, dictionary: DICT } as pako.DeflateFunctionOptions);
   return b81encode(compressed);
 }
 
 function decompress(encoded: string): string | null {
   try {
     const compressed = b81decode(encoded);
-    const bytes = pako.inflateRaw(compressed, { dictionary: DICT });
+    const bytes = pako.inflateRaw(compressed, { dictionary: DICT } as pako.InflateFunctionOptions);
     const text = new TextDecoder().decode(bytes);
     return postprocess(text);
   } catch {
@@ -178,7 +178,7 @@ export default function Shortener() {
           autoFocus
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Wpisz tekst i skopiuj link..."
+          placeholder="Wpisz tekst i skopiuj link"
           className="w-full max-w-[1024px] min-h-[80vh] resize-none bg-transparent py-[10vh] px-6 text-center text-[var(--color-text)] placeholder-[var(--color-text-muted)]/40 outline-none leading-relaxed"
           style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "clamp(1.25rem, 3vh, 3rem)" }}
         />
