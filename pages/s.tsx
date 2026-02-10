@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState, useEffect, useCallback, useRef } from "react";
 import pako from "pako";
 
-// --- Token preprocessing (1-byte control chars) ---
+// --- Token preprocessing (1-byte control chars, skip \x09 \x0A \x0D = tab/newline/CR) ---
 const TOKENS: [string, string][] = [
   ["\x01", "https://www."],
   ["\x02", "https://"],
@@ -11,13 +11,13 @@ const TOKENS: [string, string][] = [
   ["\x04", "www."],
   ["\x05", ".com/"],
   ["\x06", ".pl/"],
-  ["\x07", ".org/"],
-  ["\x08", ".net/"],
-  ["\x09", ".com"],
-  ["\x0A", ".pl"],
+  ["\x07", ".com"],
+  ["\x08", ".pl"],
+  // skip \x09 (tab)
+  // skip \x0A (newline)
   ["\x0B", ".org"],
   ["\x0C", ".net"],
-  ["\x0D", ".io"],
+  // skip \x0D (carriage return)
   ["\x0E", " będzie "],
   ["\x0F", " który "],
   ["\x10", " która "],
@@ -53,32 +53,18 @@ function postprocess(text: string): string {
 // --- Polish deflate dictionary ---
 import { DICTIONARY as DICT } from "@/lib/dictionary";
 
-// --- Base81 encoding (URL fragment safe) ---
-const B81 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~!*()+=:@/?$&,;'";
-const B81N = BigInt(B81.length);
-
-function b81encode(bytes: Uint8Array): string {
-  if (bytes.length === 0) return "";
-  let num = 0n;
-  for (const b of bytes) num = (num << 8n) | BigInt(b);
-  let result = "";
-  while (num > 0n) {
-    result = B81[Number(num % B81N)] + result;
-    num = num / B81N;
-  }
-  return B81[Math.floor(bytes.length / 81)] + B81[bytes.length % 81] + result;
+// --- Base64url encoding (URL-safe, no special chars) ---
+function toBase64url(bytes: Uint8Array): string {
+  let binary = "";
+  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
-function b81decode(str: string): Uint8Array {
-  if (str.length < 2) return new Uint8Array(0);
-  const byteLen = B81.indexOf(str[0]) * 81 + B81.indexOf(str[1]);
-  let num = 0n;
-  for (let i = 2; i < str.length; i++) num = num * B81N + BigInt(B81.indexOf(str[i]));
-  const bytes = new Uint8Array(byteLen);
-  for (let i = byteLen - 1; i >= 0; i--) {
-    bytes[i] = Number(num & 0xFFn);
-    num = num >> 8n;
-  }
+function fromBase64url(str: string): Uint8Array {
+  const base64 = str.replace(/-/g, "+").replace(/_/g, "/");
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
   return bytes;
 }
 
@@ -87,12 +73,12 @@ function compress(text: string): string {
   const processed = preprocess(text);
   const bytes = new TextEncoder().encode(processed);
   const compressed = pako.deflateRaw(bytes, { level: 9, dictionary: DICT } as pako.DeflateFunctionOptions);
-  return b81encode(compressed);
+  return toBase64url(compressed);
 }
 
 function decompress(encoded: string): string | null {
   try {
-    const compressed = b81decode(encoded);
+    const compressed = fromBase64url(encoded);
     const bytes = pako.inflateRaw(compressed, { dictionary: DICT } as pako.InflateFunctionOptions);
     const text = new TextDecoder().decode(bytes);
     return postprocess(text);
