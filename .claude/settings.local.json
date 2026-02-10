@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(del \"C:\\\\Users\\\\Bartek\\\\Desktop\\\\spierdal\\\\preview.html\")",
+      "Bash(where:*)",
+      "Bash(npx:*)",
+      "Bash(vercel --prod --yes:*)",
+      "Bash(gh auth status:*)",
+      "Bash(git remote add:*)",
+      "Bash(git remote set-url:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(nslookup:*)",
+      "Bash(curl:*)",
+      "Bash(printf:*)",
+      "Bash(yes:*)",
+      "Bash(npm install:*)",
+      "Bash(python:*)",
+      "Bash(node -e:*)"
+    ]
+  }
+}
