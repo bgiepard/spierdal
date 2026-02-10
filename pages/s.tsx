@@ -51,17 +51,7 @@ function postprocess(text: string): string {
 }
 
 // --- Polish deflate dictionary ---
-const DICT = new TextEncoder().encode(
-  "https://www.http://.com.pl.org.net.io " +
-  "nie się jest że do na jak ale czy to już tylko może który która które można będzie " +
-  "również właśnie między więc tego wszystko wszystkich ponieważ dlatego przecież zawsze " +
-  "jeszcze naprawdę dlaczego oczywiście przepraszam dziękuję proszę dobrze jestem " +
-  "jednak chyba trzeba żeby przez przed bardzo często każdy swoim takie jakiś żaden nasz " +
-  "kiedy teraz około pomiędzy zostać zrobić pierwszy ludzie miejsce strona praca czas " +
-  "świat życie sposób część punkt koniec początek problem pytanie odpowiedź pomoc informacja " +
-  "przykład sobie siebie mnie ciebie albo ani aby nawet było były dobra duże nowe inne " +
-  "kilka wiele dużo mało pewnie dalej znowu nadal zaraz prawie raczej całkiem niestety"
-);
+import { DICTIONARY as DICT } from "@/lib/dictionary";
 
 // --- Base81 encoding (URL fragment safe) ---
 const B81 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~!*()+=:@/?$&,;'";
